@@ -1,0 +1,40 @@
+nav{
+    background-color: rgba(15, 12, 41, 0.8);
+    backdrop-filter: blur(10px);
+    color: #0ff;
+    text-shadow: 0 0 5px #0ff;
+}
+
+
+header{
+    min-height: 10vh;
+    padding-bottom: 20px;
+  }
+  
+
+main {
+    min-height:75vh;
+    padding-bottom: 60px; }
+footer {
+    min-height:5vh;
+    background-color: rgba(15, 12, 41, 0.8);
+    backdrop-filter: blur(10px);
+    color: #0ff;
+    text-shadow: 0 0 5px #0ff;  
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .card-img-top {
+    height: 200px;
+    width: 100%;
+}
+
+.altura{
+    height: 300px;
+}
+
+.page-item{
+    color: black;
+}
