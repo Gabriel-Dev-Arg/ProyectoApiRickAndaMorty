@@ -98,10 +98,19 @@ const app = createApp({
                 this.selectedCharacters.push(character);
             }
         },
-        // Filtrado
+        // si cumple la condicion, traeme el personaje de ese id
         isSelected(character) {
             return this.selectedCharacters.some(c => c.id === character.id);
         },
+        removeCharacter(character) {
+            const index = this.selectedCharacters.findIndex(c => c.id === character.id);
+            if (index > -1) {
+                this.selectedCharacters.splice(index, 1);
+            }
+        },
+        clearAllCharacters() {
+            this.selectedCharacters = [];
+        }
     },
     computed: {
         filterData() {

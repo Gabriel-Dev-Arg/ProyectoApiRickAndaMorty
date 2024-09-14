@@ -31,9 +31,6 @@ footer {
     width: 100%;
 }
 
-.altura{
-    height: 300px;
-}
 
 .page-item{
     color: black;
@@ -56,3 +53,7 @@ footer {
 }
 
 
+/* modal */
+.img-modal{
+    max-width: 300px
+}
