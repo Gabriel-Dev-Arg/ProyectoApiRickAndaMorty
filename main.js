@@ -87,6 +87,9 @@ const app = createApp({
         prevPage() {
             this.goToPage(this.currentPage - 1);
         },
+        applyFilters() {
+            this.currentPage = 1; // Reinicia a la primera página cuando se aplica un filtro
+        },
 
 
         // Favoritos
@@ -130,27 +133,33 @@ const app = createApp({
             localStorage.removeItem('selectedCharacters');
         }
     },
-    computed: {
-        filterData() {
-            const data = this.characters;
-            const filteredData = data.filter(item => {
+    computed:{
+        filteredCharacters() {
+            return this.characters.filter(item => {
                 const nameMatch = item.name.toLowerCase().includes(this.textSearch.toLowerCase());
                 const statusMatch = this.statusFilter.length === 0 || this.statusFilter.includes(item.status);
                 return nameMatch && statusMatch;
             });
-
-            // Aplicar paginación
+        },
+        filterData() {
+            // Aplicar paginación a los datos filtrados
             const startIndex = (this.currentPage - 1) * this.rowsPerPage;
             const endIndex = startIndex + this.rowsPerPage;
-            return filteredData.slice(startIndex, endIndex);
+            return this.filteredCharacters.slice(startIndex, endIndex);
         },
         totalFilteredPages() {
-            const filteredData = this.characters.filter(item => {
-                const nameMatch = item.name.toLowerCase().includes(this.textSearch.toLowerCase());
-                const statusMatch = this.statusFilter.length === 0 || this.statusFilter.includes(item.status);
-                return nameMatch && statusMatch;
-            });
-            return Math.ceil(filteredData.length / this.rowsPerPage);
+            return Math.ceil(this.filteredCharacters.length / this.rowsPerPage);
+        }
+    },
+    watch: {
+        textSearch() {
+            this.applyFilters();
+        },
+        statusFilter: {
+            handler() {
+                this.applyFilters();
+            },
+            deep: true
         }
     }
 });
