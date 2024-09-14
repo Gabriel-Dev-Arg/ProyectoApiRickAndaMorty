@@ -40,10 +40,56 @@
     </header>
     <main class="container-fluid d-flex flex-column align-content-center">
         <div id="app" >
+                <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Selected Character</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div v-if="selectedCharacters.length === 0" class="text-center">
+                <p class="bg-info text-success p-2 rounded">
+                  No characters selected, please select a character
+                </p>
+                <img
+                  class="img-fluid"
+                  style="max-width: 300px"
+                  src="../assets/Rick and Morty.jpeg"
+                  alt="Rick and Morty"
+                />
+              </div>
+              <div v-else class="text-center">
+                <div v-for="character in selectedCharacters" :key="character.id" class="card mb-3">
+                  <img
+                  :src="character.image"
+                  class="card-img-top caur-img"
+                  :alt="character.name"
+                />
+                  <div class="card-body">
+                    <h5 class="card-title">{{character.name}}</h5>
+                    <p class="card-text1">Species: {{ character.species }}</p>
+                    <p class="card-text">Status: {{character.status}}</p>
+                    <p class="card-text">Dimension: {{character.origin.name}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
             <div class="container-fluid d-flex row col-12 justify-content-center">
                 <h1 class="mb-4">Rick and Morty Characters</h1>
                 <div class="d-flex  mb-3 justify-content-between col-12">
                     <div class="d-flex">
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Ver personajes seleccionados
+                      </button>
                     <label for="status-filter" class="me-2">Character Status:</label>
                     <div class="form-check form-check-inline me-2">
                         <input
@@ -107,7 +153,9 @@
                             <div
                   class="d-flex justify-content-between align-items-center gap-2"
                 >
-                  <p>Follow me</p>
+                  <button class="btn" id="btn" @click="toggleFavorite(character)">
+                    {{ isSelected(character) ? '★' : '☆' }}
+                  </button>
                   <a
                     :href="'./details.html?urlDetails=' + character.url"
                     class="btn btn-light"
@@ -120,6 +168,11 @@
                     </div>
                   </div>
                 </div>
+            </div>
+            <div class="pagination">
+              <button @click="prevPage" :disabled="currentPage === 1">Anterior</button>
+              <span>Página {{ currentPage }} de {{ totalFilteredPages }}</span>
+              <button @click="nextPage" :disabled="currentPage === totalFilteredPages">Siguiente</button>
             </div>
         </div>
 
