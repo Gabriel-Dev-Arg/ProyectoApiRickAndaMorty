@@ -16,7 +16,8 @@ const app = createApp({
             currentPage: 1,
             rowsPerPage: 20,
             totalPages: 1,
-            loading: true
+            loading: true,
+            selectedCharacters: [],
         }
     },
     created() {
@@ -84,7 +85,23 @@ const app = createApp({
         },
         prevPage() {
             this.goToPage(this.currentPage - 1);
-        }
+        },
+
+
+        // Favoritos
+        // Agregar o quitar de favoritos
+        toggleFavorite(character) {
+            const index = this.selectedCharacters.findIndex(c => c.id === character.id);
+            if (index > -1) {
+                this.selectedCharacters.splice(index, 1);
+            } else {
+                this.selectedCharacters.push(character);
+            }
+        },
+        // Filtrado
+        isSelected(character) {
+            return this.selectedCharacters.some(c => c.id === character.id);
+        },
     },
     computed: {
         filterData() {
