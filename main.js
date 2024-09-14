@@ -24,6 +24,7 @@ const app = createApp({
         this.fetchAllCharacters();
         this.fetchAllEpisodes();
         this.fetchAllLocaciones();
+        this.loadSelectedCharacters();
     },
     methods: {
         fetchallPage(url) {
@@ -97,19 +98,36 @@ const app = createApp({
             } else {
                 this.selectedCharacters.push(character);
             }
+            this.saveSelectedCharacters(); // Guardar después de cada cambio
         },
         // si cumple la condicion, traeme el personaje de ese id
         isSelected(character) {
             return this.selectedCharacters.some(c => c.id === character.id);
+            
         },
         removeCharacter(character) {
             const index = this.selectedCharacters.findIndex(c => c.id === character.id);
             if (index > -1) {
                 this.selectedCharacters.splice(index, 1);
             }
+            this.saveSelectedCharacters(); // Guardar después de cada cambio
         },
         clearAllCharacters() {
             this.selectedCharacters = [];
+            this.saveSelectedCharacters(); // Guardar después de cada cambio
+        },
+        saveSelectedCharacters() {
+            localStorage.setItem('selectedCharacters', JSON.stringify(this.selectedCharacters));
+        },
+        loadSelectedCharacters() {
+            const savedCharacters = localStorage.getItem('selectedCharacters');
+            if (savedCharacters) {
+                this.selectedCharacters = JSON.parse(savedCharacters);
+            }
+        },
+        clearSelectedCharacters() {
+            this.selectedCharacters = [];
+            localStorage.removeItem('selectedCharacters');
         }
     },
     computed: {
