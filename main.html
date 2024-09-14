@@ -104,6 +104,16 @@
                             <p class="card-text">Species: {{ character.species }}</p>
                             <p>Origin: {{ character.origin.name }}</p>
                             <p>Location: {{ character.location.name }}</p>
+                            <div
+                  class="d-flex justify-content-between align-items-center gap-2"
+                >
+                  <p>Follow me</p>
+                  <a
+                    :href="'./details.html?urlDetails=' + character.url"
+                    class="btn btn-light"
+                    >Profile</a
+                  >
+                </div>
                           </div>
                         </div>
                       </div>
