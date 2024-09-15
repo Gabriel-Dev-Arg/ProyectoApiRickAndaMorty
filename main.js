@@ -18,6 +18,10 @@ const app = createApp({
             totalPages: 1,
             loading: true,
             selectedCharacters: [],
+            selectedSeason: "",
+            selectedYear: "",
+            seasons: [],
+            years: [],
             episodeImage: '/assets/img/morty-siendo-atacado_3840x2400_xtrafondos.com.jpg',
         }
     },
@@ -61,6 +65,7 @@ const app = createApp({
             this.fetchallPage(urlEpisodes)
                 .then(data => {
                     this.episodes = data.results;
+                    this.extractSeasonsAndYears();
                 })
                 .catch(error => {
                     console.error("Error fetching episodes:", error);
@@ -133,7 +138,19 @@ const app = createApp({
         clearSelectedCharacters() {
             this.selectedCharacters = [];
             localStorage.removeItem('selectedCharacters');
-        }
+        },
+        extractSeasonsAndYears() {
+            const seasonsSet = new Set();
+            const yearsSet = new Set();
+            this.episodes.forEach(episode => {
+                const season = episode.episode.substring(1, 3);
+                seasonsSet.add(parseInt(season));
+                const year = new Date(episode.air_date).getFullYear();
+                yearsSet.add(year);
+            });
+            this.seasons = Array.from(seasonsSet).sort((a, b) => a - b);
+            this.years = Array.from(yearsSet).sort((a, b) => a - b);
+        },
     },
     computed:{
         filteredCharacters() {
@@ -152,6 +169,13 @@ const app = createApp({
         totalFilteredPages() {
             return Math.ceil(this.filteredCharacters.length / this.rowsPerPage);
         },
+        filteredEpisodes() {
+            return this.episodes.filter(episode => {
+                const seasonMatch = !this.selectedSeason || episode.episode.startsWith(`S${this.selectedSeason.toString().padStart(2, '0')}`);
+                const yearMatch = !this.selectedYear || new Date(episode.air_date).getFullYear() === parseInt(this.selectedYear);
+                return seasonMatch && yearMatch;
+            });
+        },
     },
     watch: {
         textSearch() {
@@ -162,7 +186,14 @@ const app = createApp({
                 this.applyFilters();
             },
             deep: true
-        }
+        },
+        selectedSeason() {
+            this.applyFilters();
+        },
+        selectedYear() {
+            this.applyFilters();
+        },
+        
     }
 });
 
