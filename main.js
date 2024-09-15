@@ -18,6 +18,7 @@ const app = createApp({
             totalPages: 1,
             loading: true,
             selectedCharacters: [],
+            episodeImage: '/assets/img/morty-siendo-atacado_3840x2400_xtrafondos.com.jpg',
         }
     },
     created() {
@@ -74,6 +75,7 @@ const app = createApp({
                     console.error("Error fetching locaciones:", error);
                 });
         },
+
 
         // Paginación, que la pagina acual sea la 1 por defecto, y que la ultima que no se pase sino que sea la ultima
         goToPage(page) {
@@ -149,7 +151,7 @@ const app = createApp({
         },
         totalFilteredPages() {
             return Math.ceil(this.filteredCharacters.length / this.rowsPerPage);
-        }
+        },
     },
     watch: {
         textSearch() {
