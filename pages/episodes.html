@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg >
             <div class="container-fluid">
               <a class="navbar-brand" href="#">Navbar</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,32 +23,46 @@
                     <a class="nav-link active" aria-current="page" href="/main.html">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/episodes.html">Episodes</a>
+                    <a class="nav-link" href="#">Episodes</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/locaciones.html">Locaciones</a>
+                    <a class="nav-link" href="./locaciones.html">Locaciones</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/tableRickAndMorty.html">Locaciones</a>
+                    <a class="nav-link" href="./tableRickAndMorty.html">Stats</a>
                   </li>
                 </ul>
               </div>
             </div>
           </nav>
-    </header>
+        </header>
     <main class="container-fluid d-flex flex-column">
         <div id="app">
-            <div class="row">
+            <div class="row justify-content-center">
+              <div class="col-4">
+                <h2>Selección por temporada</h2>
+                <select v-model="selectedSeason" class="form-select" aria-label="Seleccionar temporada">
+                  <option value="">Todas las temporadas</option>
+                  <option v-for="season in seasons" :key="season" :value="season">Temporada {{ season }}</option>
+                </select>
+              </div>
+              <div class="col-4">
+                <h2>Selección por año</h2>
+                <select v-model="selectedYear" class="form-select" aria-label="Seleccionar año">
+                  <option value="">Todos los años</option>
+                  <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
+                </select>
+              </div>
                 <div class="col-12">
                     <h2>Episodes</h2>
                     <div class="row">
-                        <div v-for="location in locaciones" :key="location.id" class="col-md-4 mb-3">
+                        <div v-for="episode in filteredEpisodes" :key="episode.id" class="col-md-4 mb-3">
                             <div class="card">
+                              <img :src="episodeImage" class="card-img-top" alt="Rick and Morty Episode">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ location.name }}</h5>
-                                    <p class="card-text">Type: {{ location.type }}</p>
-                                    <p class="card-text">Dimension: {{ location.dimension }}</p>
-                                    <p class="card-text">Residents: {{ location.residents.length }}</p>
+                                    <h5 class="card-title">{{ episode.name }}</h5>
+                                    <p class="card-text">Episode: {{ episode.episode }}</p>
+                                    <p class="card-text">Air Date: {{ episode.air_date }}</p>
                                 </div>
                             </div>
                         </div>
@@ -67,6 +81,6 @@
 
   </footer>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="main.js"></script>
+    <script src="/main.js"></script>
 </body>
 </html>

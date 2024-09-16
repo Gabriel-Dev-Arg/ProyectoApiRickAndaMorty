@@ -28,13 +28,13 @@
                 <a class="nav-link active" aria-current="page" href="/main.html">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/episodes.html">Episodes</a>
+                <a class="nav-link" href="./pages/episodes.html">Episodes</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/locaciones.html">Locaciones</a>
+                <a class="nav-link" href="./pages/locaciones.html">Locaciones</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/tableRickAndMorty.html">Locaciones</a>
+                <a class="nav-link" href="./pages/tableRickAndMorty.html">Stats</a>
               </li>
             </ul>
           </div>
@@ -160,7 +160,7 @@
                     {{ isSelected(character) ? '★' : '☆' }}
                   </button>
                   <a
-                    :href="'./details.html?urlDetails=' + character.url"
+                    :href="'./pages/details.html?urlDetails=' + character.url"
                     class="btn btn-light"
                     >Profile</a
                   >
